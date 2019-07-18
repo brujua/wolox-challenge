@@ -62,4 +62,15 @@ public class Photo {
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
     }
+
+    @Override
+    public String toString() {
+        return "Photo{" +
+                "albumId=" + albumId +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                ", url='" + url + '\'' +
+                ", thumbnailUrl='" + thumbnailUrl + '\'' +
+                '}';
+    }
 }

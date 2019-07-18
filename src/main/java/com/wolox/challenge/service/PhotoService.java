@@ -11,4 +11,6 @@ public interface PhotoService {
     List<Photo> findByAlbumId(Long albumId);
 
     List<Photo> findAll();
+
+    List<Photo> findByUserId(Long userId);
 }

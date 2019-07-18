@@ -20,21 +20,27 @@ public class ExternalPhotoServiceTest {
     ExternalPhotoService serv;
 
     @Test
-    public void findById() {
+    public void findByIdRetrievesCorrectPhotoForValidId() {
         Photo photo = serv.findById(1L);
         assertThat(photo.getId()).isEqualTo(1L);
     }
 
     @Test
-    public void findByAlbumId() {
+    public void findByAlbumIdNotEmptyForValidIdAndBelongsToAlbum() {
         List<Photo> photos = serv.findByAlbumId(1L);
         assertThat(photos.size()).isGreaterThan(0);
         photos.forEach(photo -> assertThat(photo.getAlbumId()).isEqualTo(1L));
     }
 
     @Test
-    public void findAll() {
+    public void findAllNotEmpty() {
         List<Photo> photos = serv.findAll();
+        assertThat(photos.size()).isGreaterThan(0);
+    }
+
+    @Test
+    public void findByUserIsNotEmptyForValidId(){
+        List<Photo> photos = serv.findByUserId(1L);
         assertThat(photos.size()).isGreaterThan(0);
     }
 }

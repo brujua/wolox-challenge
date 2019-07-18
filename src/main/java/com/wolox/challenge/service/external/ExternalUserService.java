@@ -5,12 +5,12 @@ import com.wolox.challenge.service.UserService;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@Component
+@Service
 public class ExternalUserService implements UserService {
 
     private final RestTemplate restTemplate;
@@ -21,7 +21,7 @@ public class ExternalUserService implements UserService {
 
     @Override
     public User findById(Long id) {
-        return restTemplate.getForObject("http://jsonplaceholder.typicode.com/users/"+id, User.class);
+        return restTemplate.getForObject("/users/"+id, User.class);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ExternalUserService implements UserService {
         // Need to use a ParameterizedTypeReference given that the api returns a list and not a valid json object,
         // which can be considered bad practice.
         ResponseEntity<List<User>> response = restTemplate.exchange(
-                "http://jsonplaceholder.typicode.com/users",
+                "/users",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<User>>(){});

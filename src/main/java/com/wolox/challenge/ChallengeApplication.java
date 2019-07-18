@@ -9,11 +9,6 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class ChallengeApplication {
 
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return new RestTemplate();
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(ChallengeApplication.class, args);
 	}

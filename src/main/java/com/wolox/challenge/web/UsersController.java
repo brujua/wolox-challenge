@@ -4,6 +4,7 @@ import com.wolox.challenge.entity.Photo;
 import com.wolox.challenge.entity.User;
 import com.wolox.challenge.service.PhotoService;
 import com.wolox.challenge.service.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,21 +24,15 @@ public class UsersController {
         this.photoService = photoService;
     }
 
-    @RequestMapping("")
+    @GetMapping(value = "")
     public List<User> users(){
         return userService.findAll();
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public User user(@PathVariable("id") Long id){
         return userService.findById(id);
     }
-
-    @RequestMapping("/{id}/photos")
-    public List<Photo> userPhotos(@PathVariable("id") Long id){
-        return photoService.findByUserId(id);
-    }
-
 
 
 }

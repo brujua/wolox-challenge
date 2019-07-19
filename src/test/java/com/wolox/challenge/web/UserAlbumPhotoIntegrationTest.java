@@ -49,7 +49,7 @@ public class UserAlbumPhotoIntegrationTest {
     public void photosByUserBelongsToThatUserAlbums(){
         //retrieve user (id=1) photos
         ResponseEntity<List<Photo>> response = testRestTemplate.exchange(
-                baseUrl + "/users/1/photos",
+                baseUrl + "/photos?userId=1",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<Photo>>() {}

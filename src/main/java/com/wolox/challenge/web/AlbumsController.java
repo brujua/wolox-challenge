@@ -2,10 +2,8 @@ package com.wolox.challenge.web;
 
 import com.wolox.challenge.entity.Album;
 import com.wolox.challenge.service.AlbumService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import io.swagger.annotations.ApiParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,14 +17,14 @@ public class AlbumsController {
         this.albumService = albumService;
     }
 
-    @RequestMapping("")
-    public List<Album> albums(@RequestParam(required = false) Long userId){
+    @GetMapping("")
+    public List<Album> albums(@ApiParam(value = "User-Id") @RequestParam(required = false) Long userId){
         if( userId == null)
             return albumService.findAll();
         return albumService.findByUserId(userId);
     }
 
-    @RequestMapping("/{id}")
+    @GetMapping("/{id}")
     public Album album(@PathVariable Long id){
         return albumService.findById(id);
     }

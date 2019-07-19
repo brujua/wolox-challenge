@@ -4,18 +4,22 @@ import com.wolox.challenge.entity.Album;
 import com.wolox.challenge.entity.Photo;
 import com.wolox.challenge.service.AlbumService;
 import com.wolox.challenge.service.PhotoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ExternalPhotoService implements PhotoService {
+
+    private static final String ERR_MSG_NO_PHOTO = "No photo with that Id";
 
     private final RestTemplate restTemplate;
 
@@ -28,7 +32,14 @@ public class ExternalPhotoService implements PhotoService {
 
     @Override
     public Photo findById(Long id) {
-        return restTemplate.getForObject("/photos/"+id, Photo.class);
+        try{
+            return restTemplate.getForObject("/photos/"+id, Photo.class);
+        } catch (HttpClientErrorException e){
+            if(e.getStatusCode() == HttpStatus.NOT_FOUND){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, ERR_MSG_NO_PHOTO);
+            }
+            throw e;
+        }
     }
 
     @Override

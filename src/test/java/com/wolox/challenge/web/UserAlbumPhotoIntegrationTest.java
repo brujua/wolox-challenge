@@ -22,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-public class UserAlbumPhotoRestIntegrationTest {
+public class UserAlbumPhotoIntegrationTest {
 
 
     @Value("${server.base.url}")

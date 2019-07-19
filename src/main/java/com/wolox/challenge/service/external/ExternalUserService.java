@@ -4,14 +4,19 @@ import com.wolox.challenge.entity.User;
 import com.wolox.challenge.service.UserService;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @Service
 public class ExternalUserService implements UserService {
+
+    private static final String ERR_MSG_NO_USER = "No user with that Id";
 
     private final RestTemplate restTemplate;
 
@@ -21,7 +26,14 @@ public class ExternalUserService implements UserService {
 
     @Override
     public User findById(Long id) {
-        return restTemplate.getForObject("/users/"+id, User.class);
+        try {
+            return restTemplate.getForObject("/users/"+id, User.class);
+        } catch (HttpClientErrorException e){
+            if(e.getStatusCode() == HttpStatus.NOT_FOUND){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, ERR_MSG_NO_USER);
+            }
+            throw e;
+        }
     }
 
     @Override
